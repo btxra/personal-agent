@@ -1,0 +1,1 @@
+{"version":1,"hooks":{"workspaceOpen":[{"command":"python3 \"${CURSOR_PLUGIN_ROOT}/hooks/scripts/sync-cursor.py\"","timeout":180}],"sessionStart":[{"command":"python3 \"${CURSOR_PLUGIN_ROOT}/hooks/scripts/sync-cursor.py\"","timeout":180}]}}

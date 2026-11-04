@@ -1,0 +1,1 @@
+{"SessionStart":[{"matcher":"","hooks":[{"type":"command","command":"python3 \"${DEVIN_PLUGIN_ROOT}/hooks/scripts/sync-devin.py\"","timeout":180}]}]}
