@@ -3,6 +3,7 @@ import importlib.util
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -350,6 +351,46 @@ class StaticFileCase(unittest.TestCase):
             self.assertIn("${CURSOR_PLUGIN_ROOT}/hooks/scripts/sync-cursor.py", cmd)
         self.assertTrue((SCRIPTS / "sync-cursor.py").exists())
         self.assertTrue((SCRIPTS / "sync_origin_main.py").exists())
+
+    def test_skill_discovery_and_invocation(self):
+        expected = {"diagnose", "tdd", "handoff", "ui-polish"}
+        for manifest in (".devin-plugin/plugin.json", ".cursor-plugin/plugin.json"):
+            config = json.loads((REPO_ROOT / manifest).read_text())
+            root = (REPO_ROOT / config["skills"]).resolve()
+            self.assertEqual(root, REPO_ROOT / "skills")
+            self.assertEqual({p.parent.name for p in root.glob("*/SKILL.md")}, expected)
+        for name in expected:
+            text = (REPO_ROOT / "skills" / name / "SKILL.md").read_text()
+            front = text.split("---", 2)[1]
+            self.assertIn(f"name: {name}\n", front)
+            self.assertIn("disable-model-invocation: true", front)
+            self.assertIn("triggers: [user]", front)
+            self.assertNotIn("allowed-tools:", front)
+            self.assertNotIn("permissions:", front)
+            license_id = "CC-BY-4.0" if name == "ui-polish" else "MIT"
+            self.assertIn(f"license: {license_id}", front)
+
+    def test_packaged_markdown_links_resolve(self):
+        files = list((REPO_ROOT / "skills").rglob("*.md"))
+        files += [REPO_ROOT / "README.md", REPO_ROOT / "THIRD_PARTY_NOTICES.md"]
+        for source in files:
+            for target in re.findall(r"\]\(([^)]+)\)", source.read_text()):
+                if target.startswith(("https://", "http://", "#")):
+                    continue
+                target = target.split("#", 1)[0]
+                resolved = (source.parent / target).resolve()
+                self.assertTrue(resolved.is_relative_to(REPO_ROOT), (source, target))
+                self.assertTrue(resolved.is_file(), (source, target))
+
+    def test_license_and_provenance_packaged(self):
+        mit = (REPO_ROOT / "licenses/matt-pocock-MIT.txt").read_text()
+        cc = (REPO_ROOT / "licenses/unslop-CC-BY-4.0.txt").read_text()
+        notices = (REPO_ROOT / "THIRD_PARTY_NOTICES.md").read_text()
+        self.assertIn("Copyright (c) 2026 Matt Pocock", mit)
+        self.assertIn("Section 3 -- License Conditions.", cc)
+        self.assertIn("4ae2317ddb22b046e26455e4f9c9b3aaaf62212d", notices)
+        self.assertIn("a6f121eee5f29c2f74976b75456feae8b66afb3a", notices)
+        self.assertEqual((REPO_ROOT / "LICENSE").read_text(), mit.replace("Copyright (c) 2026 Matt Pocock", "Copyright (c) 2026 btxra"))
 
 
 if __name__ == "__main__":

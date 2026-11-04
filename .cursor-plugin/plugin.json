@@ -1,1 +1,19 @@
-{"name":"personal-agent","version":"1.4.0","description":"Personal rules and safe Git worktree synchronization for Cursor and Devin.","author":{"name":"btxra"},"repository":"https://github.com/btxra/personal-agent","hooks":"./hooks/hooks.cursor.json","keywords":["personal","rules","hooks","git","worktrees"]}
+{
+  "name": "personal-agent",
+  "version": "1.5.0",
+  "description": "Personal rules, focused engineering skills, and safe Git worktree synchronization for Cursor and Devin.",
+  "author": {
+    "name": "btxra"
+  },
+  "repository": "https://github.com/btxra/personal-agent",
+  "hooks": "./hooks/hooks.cursor.json",
+  "keywords": [
+    "personal",
+    "rules",
+    "hooks",
+    "git",
+    "worktrees"
+  ],
+  "skills": "./skills",
+  "license": "MIT"
+}

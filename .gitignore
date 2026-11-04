@@ -7,3 +7,11 @@ state/
 *.before-*.json
 *.before-*.txt
 config.local.json
+.desloppify/
+unslop/
+unslop-story/
+artifacts/
+reports/
+*.har
+*.pem
+*.key

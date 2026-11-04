@@ -2,7 +2,7 @@
 
 <img src="assets/personal-agent.svg" alt="Personal Agent icon" width="96" height="96">
 
-Personal rules and safe Git worktree synchronization for Cursor and Devin.
+Personal rules, focused engineering skills, and safe Git worktree synchronization for Cursor and Devin.
 
 ## Install
 
@@ -28,6 +28,25 @@ Requires Git and Python 3.10+. There are no third-party Python dependencies. Sta
 
 Keep private identities and account preferences in your IDE's machine-local rules. Do not commit local configuration, tokens, backups, or state to this repository.
 
+## Optional skills
+
+The skills run only when explicitly invoked; they do not add another always-on workflow. In Devin, use the namespaced commands below. In Cursor, select the matching skill from the installed plugin's command picker.
+
+| Command | Purpose |
+| --- | --- |
+| `/personal-agent:diagnose` | Reproduce a bug, compare explanations, and report evidence. Fixes require an authorized fix request. |
+| `/personal-agent:tdd` | Implement requested behavior through a public interface, one red-to-green slice at a time. |
+| `/personal-agent:handoff` | Create a compact, redacted continuation note outside the repository, or in chat when requested. |
+| `/personal-agent:ui-polish` | Audit a screen, agree a direction, refine it, and verify what renders. |
+
+These skills respect repository instructions and host permissions. They do not grant permission to install tools, use production systems, publish artifacts, or change GitHub accounts. UI polish uses existing browser tooling and reports when runtime verification is unavailable. Desloppify is not included.
+
+Captured pages, private screenshots, handoffs, and reports belong in a private temporary directory outside the repository. The plugin does not upload these artifacts or connect image-generation services.
+
+## License and credits
+
+Original material is [MIT-licensed](LICENSE). The engineering and handoff skills are adapted from Matt Pocock's MIT-licensed skills; UI polish is adapted from Damir Sokolovsky's Unslop under CC BY 4.0. See [third-party notices](THIRD_PARTY_NOTICES.md) for pinned revisions, retained licenses, file mappings, and modifications.
+
 ## Updates and tests
 
 Use the IDE's plugin update controls. For Devin, run `devin plugins update personal-agent`; use Customize's reindex action if its cloud listing is stale. Update the repository's rule pairs together: `.md` is for Devin and `.mdc` for Cursor, with identical bodies.
@@ -35,3 +54,5 @@ Use the IDE's plugin update controls. For Devin, run `devin plugins update perso
 ```sh
 python3 -m unittest discover -s tests -v
 ```
+
+CI checks plugin packaging and unit tests, and scans Git history for secrets with a pinned Gitleaks release. These checks do not establish agent-behavior effectiveness; that requires isolated runs with and without the skill. GitHub secret scanning and push protection complement CI.
