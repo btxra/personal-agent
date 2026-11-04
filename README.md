@@ -1,5 +1,7 @@
 # Personal Agent
 
+<img src="assets/personal-agent.svg" alt="Personal Agent icon" width="96" height="96">
+
 Personal rules and safe Git worktree synchronization for Cursor and Devin.
 
 ## Install
