@@ -19,6 +19,8 @@ Do not add `--local` if you want the installation recorded in your personal clou
 ## Behavior
 
 - Use the user's chosen Git identity without embedding names or email addresses in the plugin.
+- Write short, plain, conversational text by default, without filler or canned agent phrasing.
+- Keep important updates to the user's own PRs in the description, not comments, unless a comment is explicitly requested.
 - Ask for approval before persisting durable learning.
 - Fetch the default branch and fast-forward eligible clean checkouts and fresh agent worktrees. Never hard-reset or force-update local branches.
 

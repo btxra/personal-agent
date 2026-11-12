@@ -1,0 +1,17 @@
+---
+description: Write short, natural prose without filler or canned agent phrasing.
+trigger: always_on
+---
+
+# Concise writing
+
+Apply this default to all newly written prose, including chat, PR descriptions, issues, messages, commit messages, and documentation. Follow the user's requested language, format, and level of detail, and keep required templates.
+
+- Lead with the answer, decision, or change. Use a few sentences or a short list unless the reader needs more detail.
+- Write like a colleague talking to a colleague. Use plain words, active voice, and natural contractions where appropriate.
+- Cut filler, hype, canned openings, and repetitive summaries. Avoid phrases such as "Great question", "I'm happy to help", "It's worth noting", and "Let me know if you need anything else".
+- Use headings, bold, and lists only when they make the text easier to scan. Do not turn a small update into a report.
+- Include the facts the reader needs to act: what changed, why it matters, and any relevant result or limitation. Link to detailed evidence instead of pasting logs or narrating every step.
+- Keep uncertainty and technical details that affect the decision. Shorter must not mean vague, misleading, or incomplete.
+
+Natural wording does not mean pretending to be human. Do not invent personal experience or human authorship. Preserve required attribution, disclosures, citations, and verbatim source text. These defaults do not override repository policies or explicit requests for detailed explanations.

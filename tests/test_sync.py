@@ -321,13 +321,22 @@ class EntrypointCase(unittest.TestCase):
 
 class StaticFileCase(unittest.TestCase):
     def test_rule_bodies_match(self):
-        for stem in ("git-commit-identity", "live-learning", "worktree-from-origin"):
-            md = (REPO_ROOT / "rules" / f"{stem}.md").read_text()
-            mdc = (REPO_ROOT / "rules" / f"{stem}.mdc").read_text()
-            self.assertTrue(md.startswith("---\n"), stem)
-            self.assertIn("trigger: always_on", md.split("---", 2)[1])
-            self.assertIn("alwaysApply: true", mdc.split("---", 2)[1])
-            self.assertEqual(md.split("---", 2)[2], mdc.split("---", 2)[2], stem)
+        expected = {"git-commit-identity", "live-learning", "worktree-from-origin",
+                    "concise-writing", "own-pr-updates"}
+        rules = REPO_ROOT / "rules"
+        md_stems = {p.stem for p in rules.glob("*.md")}
+        mdc_stems = {p.stem for p in rules.glob("*.mdc")}
+        self.assertTrue(expected <= md_stems)
+        self.assertEqual(md_stems, mdc_stems)
+        for stem in sorted(md_stems):
+            with self.subTest(rule=stem):
+                md = (rules / f"{stem}.md").read_text()
+                mdc = (rules / f"{stem}.mdc").read_text()
+                self.assertTrue(md.startswith("---\n"))
+                self.assertTrue(mdc.startswith("---\n"))
+                self.assertIn("trigger: always_on", md.split("---", 2)[1])
+                self.assertIn("alwaysApply: true", mdc.split("---", 2)[1])
+                self.assertEqual(md.split("---", 2)[2], mdc.split("---", 2)[2])
 
     def test_manifests_consistent(self):
         cur = json.loads((REPO_ROOT / ".cursor-plugin" / "plugin.json").read_text())
@@ -337,6 +346,7 @@ class StaticFileCase(unittest.TestCase):
         self.assertEqual(dev["name"], "personal-agent")
         self.assertEqual(cur["version"], dev["version"])
         self.assertEqual(cur["version"], mkt["version"])
+        self.assertEqual(cur["version"], mkt["plugins"][0]["version"])
         self.assertEqual(mkt["plugins"][0]["name"], "personal-agent")
         self.assertEqual(mkt["plugins"][0]["source"], "./")
 

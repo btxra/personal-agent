@@ -1,13 +1,13 @@
 {
   "name": "personal-agent",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "author": {
     "name": "btxra"
   },
   "plugins": [
     {
       "name": "personal-agent",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "description": "Personal rules, focused engineering skills, and safe Git worktree synchronization for Cursor and Devin.",
       "source": "./"
     }
